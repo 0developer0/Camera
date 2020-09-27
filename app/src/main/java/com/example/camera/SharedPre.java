@@ -18,6 +18,6 @@ public class SharedPre {
     }
 
     public boolean getFlash(){
-        return sharedPreferences.getBoolean("Dark Mode", false);
+        return sharedPreferences.getBoolean("Dark Mode", true);
     }
 }

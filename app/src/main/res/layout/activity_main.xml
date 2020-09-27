@@ -30,6 +30,7 @@
                 android:id="@+id/btn_main_flash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:enabled="true"
                 android:padding="8dp"
                 android:layout_gravity="center"
                 android:drawableStart="@drawable/ic_flash_en_dis" />
@@ -75,7 +76,9 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="start|center"
-            android:alpha="1.0" />
+            android:alpha="1.0"
+            android:clickable="true"
+            android:focusable="true" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_main_capture"

@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity{
     private FloatingActionButton btn_Capture;
     private Button btn_gallery;
 
-    private Toolbar tb_toolbar;
-
     private Button btn_flash;
 
     private SharedPre sharedPre;
@@ -49,10 +47,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
-
         //init View
-
-        tb_toolbar = findViewById(R.id.tb_main_toolbar);
 
         camKitView = findViewById(R.id.kit_main_cam_view);
 
@@ -65,6 +60,8 @@ public class MainActivity extends AppCompatActivity{
         btn_flash.setOnClickListener(flashOnClickListener);
 
         jpg_img_view = findViewById(R.id.jpeg_main_image);
+
+        jpg_img_view.setOnClickListener(jpegOnClickListener);
 
         sharedPre = new SharedPre(getApplicationContext());
 
@@ -174,19 +171,17 @@ public class MainActivity extends AppCompatActivity{
     private View.OnClickListener flashOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v){
-            flash = !flash;
-            sharedPre.setFlash(flash);
-
-            if(flash){
+            sharedPre.setFlash(!flash);
+            if(sharedPre.getFlash()){
+                btn_flash.setEnabled(true);
                 try {
-                    btn_flash.setEnabled(true);
                     camKitView.setFlash(CameraKit.FLASH_ON);
                 } catch (RuntimeException e){
                     Log.e(TAG, "onCreate: flashOn");
                 }
             } else{
+                btn_flash.setEnabled(false);
                 try {
-                    btn_flash.setEnabled(false);
                     camKitView.setFlash(CameraKit.FLASH_OFF);
                 } catch (RuntimeException e){
                     Log.e(TAG, "onCreate: flashOff");
@@ -195,11 +190,20 @@ public class MainActivity extends AppCompatActivity{
         }
     };
 
+    private View.OnClickListener jpegOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
+
     private View.OnClickListener galleryOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.setType("image/*");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     };
